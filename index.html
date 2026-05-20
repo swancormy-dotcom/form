@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Management Portal</title>
+    <style>
+        :root {
+            --primary-color: #673ab7; /* Classic Google Forms Purple */
+            --sidebar-bg: #2d3748;    /* Dark theme sidebar */
+            --active-color: #4e279b;
+            --text-light: #ffffff;
+            --bg-color: #f7fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-color);
+        }
+
+        /* Left Navigation Sidebar */
+        .sidebar {
+            width: 300px;
+            background-color: var(--sidebar-bg);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 15px;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .sidebar h2 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .sidebar .subtitle {
+            font-size: 12px;
+            color: #a0aec0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Navigation Buttons */
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            transform: translateX(3px);
+        }
+
+        /* Active Button Style */
+        .nav-btn.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(103, 58, 183, 0.3);
+        }
+
+        .btn-icon {
+            font-size: 20px;
+        }
+
+        /* Right Content Area for Forms */
+        .main-content {
+            flex: 1;
+            height: 100%;
+            position: relative;
+            background-color: #fff;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none; /* Hidden by default, controlled by JS */
+        }
+
+        iframe.active {
+            display: block;
+        }
+
+        /* Mobile Responsive Layout */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 15px;
+            }
+            .sidebar .subtitle {
+                margin-bottom: 15px;
+            }
+            .nav-btn {
+                padding: 10px 15px;
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
+            .main-content {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Left Sidebar Menu -->
+    <div class="sidebar">
+        <h2>Operations Portal</h2>
+        <p class="subtitle">Select a form below to fill it out directly</p>
+        
+        <button class="nav-btn active" onclick="switchForm(1)">
+            <span class="btn-icon">📝</span> PD
+        </button>
+        <button class="nav-btn" onclick="switchForm(2)">
+            <span class="btn-icon">🛠️</span> QA
+        </button>
+        <button class="nav-btn" onclick="switchForm(3)">
+            <span class="btn-icon">📦</span> PD RETEST
+        </button>
+        <button class="nav-btn" onclick="switchForm(4)">
+            <span class="btn-icon">⚠️</span> PD RE-ADJUSTMENT (If QA failed)
+        </button>
+    </div>
+
+    <!-- Right Embedded Forms Container -->
+    <div class="main-content">
+        <!-- Replace the URLs below with your actual Google Form links -->
+        <iframe id="iframe1" class="active" src="https://forms.gle/eJvuSLmZjqQGBV297">Loading...</iframe>
+        <iframe id="iframe2" src="https://forms.gle/q6mZ6kUc6dp2dYMk6">Loading...</iframe>
+        <iframe id="iframe3" src="https://forms.gle/vrsXpjYCQVZrXJu47">Loading...</iframe>
+        <iframe id="iframe4" src="https://forms.gle/DqdmE8q5oJVgAJ866">Loading...</iframe>
+    </div>
+
+    <script>
+        function switchForm(index) {
+            // 1. Switch active state for buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            buttons[index - 1].classList.add('active');
+
+            // 2. Switch active state for iframes
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => iframe.classList.remove('active'));
+            document.getElementById('iframe' + index).classList.add('active');
+        }
+    </script>
+</body>
+</html>
