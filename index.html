@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Management Portal</title>
+    <title>Operations Portal - Mobile</title>
     <style>
         :root {
             --primary-color: #673ab7; /* Classic Google Forms Purple */
-            --sidebar-bg: #2d3748;    /* Dark theme sidebar */
-            --active-color: #4e279b;
+            --nav-bg: #2d3748;        /* Dark theme top bar */
             --text-light: #ffffff;
             --bg-color: #f7fafc;
         }
@@ -17,145 +16,145 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
             display: flex;
+            flex-direction: column;
             height: 100vh;
             overflow: hidden;
             background-color: var(--bg-color);
         }
 
-        /* Left Navigation Sidebar */
-        .sidebar {
-            width: 300px;
-            background-color: var(--sidebar-bg);
+        /* Top Navigation Bar */
+        .top-navbar {
+            background-color: var(--nav-bg);
             color: var(--text-light);
+            padding: 12px 16px;
             display: flex;
             flex-direction: column;
-            padding: 20px 15px;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             z-index: 10;
         }
 
-        .sidebar h2 {
-            font-size: 22px;
-            margin-bottom: 5px;
-            color: #fff;
-            text-align: center;
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .sidebar .subtitle {
-            font-size: 12px;
-            color: #a0aec0;
-            text-align: center;
-            margin-bottom: 30px;
+        .nav-header h2 {
+            font-size: 18px;
+            font-weight: 600;
         }
 
-        /* Navigation Buttons */
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #e2e8f0;
-            padding: 15px 20px;
-            margin-bottom: 12px;
+        /* Smartphone Optimized Dropdown Selector */
+        .form-select-box {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px; /* 16px prevents iOS browser auto-zooming on focus */
             border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
             font-weight: 500;
-            transition: all 0.2s ease;
+            outline: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            appearance: none; /* Removes default browser styling arrow */
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+
+        .form-select-box:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .form-select-box option {
+            background-color: var(--nav-bg);
+            color: #fff;
+        }
+
+        /* Active Form Status Line */
+        .status-bar {
+            background-color: #fff;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 6px;
         }
 
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-            transform: translateX(3px);
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #48bb78; /* Green active status dot */
+            border-radius: 50%;
+            display: inline-block;
         }
 
-        /* Active Button Style */
-        .nav-btn.active {
-            background-color: var(--primary-color);
-            color: #fff;
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 12px rgba(103, 58, 183, 0.3);
+        #current-form-title {
+            color: var(--primary-color);
         }
 
-        .btn-icon {
-            font-size: 20px;
-        }
-
-        /* Right Content Area for Forms */
+        /* Content Area For Full-Screen Google Forms */
         .main-content {
             flex: 1;
+            width: 100%;
             height: 100%;
             position: relative;
             background-color: #fff;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling for older iOS devices */
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
-            display: none; /* Hidden by default, controlled by JS */
+            display: none;
         }
 
         iframe.active {
             display: block;
         }
-
-        /* Mobile Responsive Layout */
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                padding: 15px;
-            }
-            .sidebar .subtitle {
-                margin-bottom: 15px;
-            }
-            .nav-btn {
-                padding: 10px 15px;
-                margin-bottom: 8px;
-                font-size: 14px;
-            }
-            .main-content {
-                flex: 1;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <!-- Left Sidebar Menu -->
-    <div class="sidebar">
-        <h2>Operations Portal</h2>
-        <p class="subtitle">Select a form below to fill it out directly</p>
+    <!-- Top Navbar with Dropdown -->
+    <div class="top-navbar">
+        <div class="nav-header">
+            <h2>Operations Portal</h2>
+        </div>
         
-        <button class="nav-btn active" onclick="switchForm(1)">
-            <span class="btn-icon">📝</span> PD
-        </button>
-        <button class="nav-btn" onclick="switchForm(2)">
-            <span class="btn-icon">🛠️</span> QA
-        </button>
-        <button class="nav-btn" onclick="switchForm(3)">
-            <span class="btn-icon">📦</span> PD RETEST
-        </button>
-        <button class="nav-btn" onclick="switchForm(4)">
-            <span class="btn-icon">⚠️</span> PD RE-ADJUSTMENT (If QA failed)
-        </button>
+        <!-- Dropdown menu replaces the sidebar layout -->
+        <select class="form-select-box" id="formSelector" onchange="switchForm(this.value)">
+            <option value="1">📝 PD</option>
+            <option value="2">🛠️ QA</option>
+            <option value="3">📦 PD RETEST</option>
+            <option value="4">⚠️ PD RE-ADJUSTMENT (If QA failed)</option>
+        </select>
     </div>
 
-    <!-- Right Embedded Forms Container -->
+    <!-- Active Form Top Status Line -->
+    <div class="status-bar">
+        <span class="status-dot"></span>
+        <span>Active: </span>
+        <span id="current-form-title">Form One</span>
+    </div>
+
+    <!-- Main Form Display Frame -->
     <div class="main-content">
-        <!-- Replace the URLs below with your actual Google Form links -->
+        <!-- Replace URLs below with your public Google Form links (ending in /viewform) -->
         <iframe id="iframe1" class="active" src="https://forms.gle/eJvuSLmZjqQGBV297">Loading...</iframe>
         <iframe id="iframe2" src="https://forms.gle/q6mZ6kUc6dp2dYMk6">Loading...</iframe>
         <iframe id="iframe3" src="https://forms.gle/vrsXpjYCQVZrXJu47">Loading...</iframe>
@@ -164,15 +163,17 @@
 
     <script>
         function switchForm(index) {
-            // 1. Switch active state for buttons
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            buttons[index - 1].classList.add('active');
-
-            // 2. Switch active state for iframes
+            // 1. Switch the visibility of the internal frames
             const iframes = document.querySelectorAll('iframe');
             iframes.forEach(iframe => iframe.classList.remove('active'));
             document.getElementById('iframe' + index).classList.add('active');
+
+            // 2. Extract the text of the selected option to update the top status line dynamically
+            const selector = document.getElementById('formSelector');
+            const selectedText = selector.options[selector.selectedIndex].text;
+            
+            // Update the display text line
+            document.getElementById('current-form-title').innerText = selectedText;
         }
     </script>
 </body>
