@@ -1,180 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operations Portal - Mobile</title>
-    <style>
-        :root {
-            --primary-color: #673ab7; /* Classic Google Forms Purple */
-            --nav-bg: #2d3748;        /* Dark theme top bar */
-            --text-light: #ffffff;
-            --bg-color: #f7fafc;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations Portal - Mobile</title>
+    <style>
+        :root {
+            --primary-color: #673ab7; /* Classic Google Forms Purple */
+            --nav-bg: #2d3748;        /* Dark theme top bar */
+            --text-light: #ffffff;
+            --bg-color: #f7fafc;
+        }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-            background-color: var(--bg-color);
-        }
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-color);
+        }
 
-        /* Top Navigation Bar */
-        .top-navbar {
-            background-color: var(--nav-bg);
-            color: var(--text-light);
-            padding: 12px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
+        /* Top Navigation Bar */
+        .top-navbar {
+            background-color: var(--nav-bg);
+            color: var(--text-light);
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
 
-        .nav-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        .nav-header h2 {
-            font-size: 18px;
-            font-weight: 600;
-        }
+        .nav-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+        }
 
-        /* Smartphone Optimized Dropdown Selector */
-        .form-select-box {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px; /* 16px prevents iOS browser auto-zooming on focus */
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-weight: 500;
-            outline: none;
-            cursor: pointer;
-            transition: background 0.2s;
-            appearance: none; /* Removes default browser styling arrow */
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 16px;
-        }
+        /* Smartphone Optimized Dropdown Selector */
+        .form-select-box {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px; /* 16px prevents iOS browser auto-zooming on focus */
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            appearance: none; /* Removes default browser styling arrow */
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
 
-        .form-select-box:focus {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-color: var(--primary-color);
-        }
+        .form-select-box:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: var(--primary-color);
+        }
 
-        .form-select-box option {
-            background-color: var(--nav-bg);
-            color: #fff;
-        }
+        .form-select-box option {
+            background-color: var(--nav-bg);
+            color: #fff;
+        }
 
-        /* Active Form Status Line */
-        .status-bar {
-            background-color: #fff;
-            padding: 10px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #4a5568;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        /* Active Form Status Line */
+        .status-bar {
+            background-color: #fff;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-        .status-dot {
-            height: 8px;
-            width: 8px;
-            background-color: #48bb78; /* Green active status dot */
-            border-radius: 50%;
-            display: inline-block;
-        }
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #48bb78; /* Green active status dot */
+            border-radius: 50%;
+            display: inline-block;
+        }
 
-        #current-form-title {
-            color: var(--primary-color);
-        }
+        #current-form-title {
+            color: var(--primary-color);
+        }
 
-        /* Content Area For Full-Screen Google Forms */
-        .main-content {
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            background-color: #fff;
-            -webkit-overflow-scrolling: touch; /* Smooth scrolling for older iOS devices */
-        }
+        /* Content Area For Full-Screen Google Forms */
+        .main-content {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #fff;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling for older iOS devices */
+        }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: none;
-        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
 
-        iframe.active {
-            display: block;
-        }
-    </style>
+        iframe.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Top Navbar with Dropdown -->
-    <div class="top-navbar">
-        <div class="nav-header">
-            <h2>Operations Portal</h2>
-        </div>
-        
-        <!-- Dropdown menu replaces the sidebar layout -->
-        <select class="form-select-box" id="formSelector" onchange="switchForm(this.value)">
-            <option value="1">📝 PD</option>
-            <option value="2">🛠️ QA</option>
-            <option value="3">📦 PD RETEST</option>
-            <option value="4">⚠️ PD RE-ADJUSTMENT (If QA failed)</option>
-        </select>
-    </div>
+    <!-- Top Navbar with Dropdown -->
+    <div class="top-navbar">
+        <div class="nav-header">
+            <h2>Operations Portal</h2>
+        </div>
+        
+        <!-- Dropdown menu replaces the sidebar layout -->
+        <select class="form-select-box" id="formSelector" onchange="switchForm(this.value)">
+            <option value="1">📝 PD</option>
+            <option value="2">🛠️ QA</option>
+            <option value="3">📦 PD RETEST</option>
+            <option value="4">⚠️ PD RE-ADJUSTMENT (If QA failed)</option>
+        </select>
+    </div>
 
-    <!-- Active Form Top Status Line -->
-    <div class="status-bar">
-        <span class="status-dot"></span>
-        <span>Active: </span>
-        <span id="current-form-title">Form One</span>
-    </div>
+    <!-- Active Form Top Status Line -->
+    <div class="status-bar">
+        <span class="status-dot"></span>
+        <span>Active: </span>
+        <span id="current-form-title">Form One</span>
+    </div>
 
-    <!-- Main Form Display Frame -->
-    <div class="main-content">
-        <!-- Replace URLs below with your public Google Form links (ending in /viewform) -->
-        <iframe id="iframe1" class="active" src="https://forms.gle/eJvuSLmZjqQGBV297">Loading...</iframe>
+    <!-- Main Form Display Frame -->
+    <div class="main-content">
+        <!-- Replace URLs below with your public Google Form links (ending in /viewform) -->
+        <iframe id="iframe1" class="active" src="https://forms.gle/eJvuSLmZjqQGBV297">Loading...</iframe>
         <iframe id="iframe2" src="https://forms.gle/q6mZ6kUc6dp2dYMk6">Loading...</iframe>
         <iframe id="iframe3" src="https://forms.gle/vrsXpjYCQVZrXJu47">Loading...</iframe>
         <iframe id="iframe4" src="https://forms.gle/DqdmE8q5oJVgAJ866">Loading...</iframe>
-    </div>
+    </div>
 
-    <script>
-        function switchForm(index) {
-            // 1. Switch the visibility of the internal frames
-            const iframes = document.querySelectorAll('iframe');
-            iframes.forEach(iframe => iframe.classList.remove('active'));
-            document.getElementById('iframe' + index).classList.add('active');
+    <script>
+        function switchForm(index) {
+            // 1. Switch the visibility of the internal frames
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => iframe.classList.remove('active'));
+            document.getElementById('iframe' + index).classList.add('active');
 
-            // 2. Extract the text of the selected option to update the top status line dynamically
-            const selector = document.getElementById('formSelector');
-            const selectedText = selector.options[selector.selectedIndex].text;
-            
-            // Update the display text line
-            document.getElementById('current-form-title').innerText = selectedText;
-        }
-    </script>
+            // 2. Extract the text of the selected option to update the top status line dynamically
+            const selector = document.getElementById('formSelector');
+            const selectedText = selector.options[selector.selectedIndex].text;
+            
+            // Update the display text line
+            document.getElementById('current-form-title').innerText = selectedText;
+        }
+    </script>
 </body>
 </html>
