@@ -1,347 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operations Portal - Mobile Menu</title>
-    <style>
-        :root {
-            --primary-color: #673ab7; /* Classic Google Forms Purple */
-            --header-bg: #2d3748;     /* Premium dark theme header */
-            --menu-bg: #1a202c;       /* Darker background for the rollout menu */
-            --text-light: #ffffff;
-            --bg-color: #f7fafc;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations Portal - Mobile</title>
+    <style>
+        :root {
+            --primary-color: #673ab7; /* Classic Google Forms Purple */
+            --nav-bg: #2d3748;        /* Dark theme top bar */
+            --text-light: #ffffff;
+            --bg-color: #f7fafc;
+        }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-            background-color: var(--bg-color);
-        }
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-color);
+        }
 
-        /* Top Header Bar */
-        .top-header {
-            background-color: var(--header-bg);
-            color: var(--text-light);
-            padding: 14px 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 100;
-        }
+        /* Top Navigation Bar */
+        .top-navbar {
+            background-color: var(--nav-bg);
+            color: var(--text-light);
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
 
-        /* Active Form Title Display */
-        .active-title-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            max-width: 80%;
-            overflow: hidden;
-        }
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        .status-dot {
-            height: 8px;
-            width: 8px;
-            background-color: #48bb78; /* Active green indicator */
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
+        .nav-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+        }
 
-        #header-active-title {
-            font-size: 16px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        /* Smartphone Optimized Dropdown Selector */
+        .form-select-box {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px; /* 16px prevents iOS browser auto-zooming on focus */
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            appearance: none; /* Removes default browser styling arrow */
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
 
-        /* Smartphone Optimized Hamburger Icon Button */
-        .menu-toggle-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 24px;
-            height: 18px;
-            padding: 0;
-            z-index: 101;
-        }
+        .form-select-box:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: var(--primary-color);
+        }
 
-        .menu-toggle-btn .bar {
-            width: 100%;
-            height: 3px;
-            background-color: var(--text-light);
-            border-radius: 2px;
-            transition: all 0.3s ease-in-out;
-        }
+        .form-select-box option {
+            background-color: var(--nav-bg);
+            color: #fff;
+        }
 
-        /* Hamburger to X transformation animation */
-        .menu-toggle-btn.open .bar:nth-child(1) {
-            transform: translateY(7.5px) rotate(45deg);
-        }
+        /* Active Form Status Line */
+        .status-bar {
+            background-color: #fff;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-        .menu-toggle-btn.open .bar:nth-child(2) {
-            opacity: 0;
-        }
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #48bb78; /* Green active status dot */
+            border-radius: 50%;
+            display: inline-block;
+        }
 
-        .menu-toggle-btn.open .bar:nth-child(3) {
-            transform: translateY(-7.5px) rotate(-45deg);
-        }
+        #current-form-title {
+            color: var(--primary-color);
+        }
 
-        /* Dropdown Rollout Menu Layout */
-        .rollout-menu {
-            position: absolute;
-            top: 50px; /* Sits directly below header bar */
-            left: 0;
-            width: 100%;
-            background-color: var(--menu-bg);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
-            z-index: 99;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease-in-out;
-            display: flex;
-            flex-direction: column;
-        }
+        /* Content Area For Full-Screen Google Forms */
+        .main-content {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #fff;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling for older iOS devices */
+        }
 
-        .rollout-menu.open {
-            max-height: 400px; /* Adjust if more tabs are added */
-            opacity: 1;
-        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
 
-        /* Individual Menu Item Buttons */
-        .menu-item {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            color: #cbd5e0;
-            padding: 16px 24px;
-            text-align: left;
-            font-size: 15px;
-            font-weight: 500;
-            width: 100%;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .menu-item:active, .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: #fff;
-        }
-
-        /* Active Menu Item Styling */
-        .menu-item.active {
-            background-color: var(--primary-color);
-            color: #fff;
-            font-weight: 600;
-        }
-
-        /* Content Area For Full-Screen Google Forms */
-        .main-content {
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            background-color: #fff;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Iframe container wrapper to house fallbacks cleanly */
-        .iframe-container {
-            width: 100%;
-            height: 100%;
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .iframe-container.active {
-            display: block;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Web Link / Iframe Fallback Assistant UI */
-        .fallback-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #ebf8ff;
-            border-bottom: 1px solid #bee3f8;
-            padding: 10px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 5;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .fallback-text {
-            font-size: 13px;
-            color: #2b6cb0;
-            font-weight: 500;
-        }
-
-        .fallback-btn {
-            background-color: #3182ce;
-            color: #fff;
-            text-decoration: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.3);
-        }
-
-        .fallback-btn:active {
-            background-color: #2b6cb0;
-        }
-
-        /* Dropdown backdrop cover for closing when clicking outside */
-        .menu-backdrop {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0,0,0,0.3);
-            z-index: 98;
-        }
-
-        .menu-backdrop.open {
-            display: block;
-        }
-    </style>
+        iframe.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Top Header displaying the selected form title -->
-    <header class="top-header">
-        <div class="active-title-container">
-            <span class="status-dot"></span>
-            <span id="header-active-title">📝 PD</span>
-        </div>
-        
-        <!-- Hamburger Menu Button -->
-        <button class="menu-toggle-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Toggle Navigation Menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-    </header>
+    <!-- Top Navbar with Dropdown -->
+    <div class="top-navbar">
+        <div class="nav-header">
+            <h2>Operations Portal</h2>
+        </div>
+        
+        <!-- Dropdown menu replaces the sidebar layout -->
+        <select class="form-select-box" id="formSelector" onchange="switchForm(this.value)">
+            <option value="1">📝 PD</option>
+            <option value="2">🛠️ QA</option>
+            <option value="3">📦 PD RETEST</option>
+            <option value="4">⚠️ PD RE-ADJUSTMENT (If QA failed)</option>
+        </select>
+    </div>
 
-    <!-- Tap-outside backdrop screen cover -->
-    <div class="menu-backdrop" id="menuBackdrop" onclick="toggleMenu()"></div>
+    <!-- Active Form Top Status Line -->
+    <div class="status-bar">
+        <span class="status-dot"></span>
+        <span>Active: </span>
+        <span id="current-form-title">Form One</span>
+    </div>
 
-    <!-- Hidden Rollout Navigation Menu (Toggled via JavaScript) -->
-    <nav class="rollout-menu" id="rolloutMenu">
-        <button class="menu-item active" onclick="switchForm(1, '📝 PD')">
-            <span>📝</span> PD
-        </button>
-        <button class="menu-item" onclick="switchForm(2, '🛠️ QA')">
-            <span>🛠️</span> QA
-        </button>
-        <button class="menu-item" onclick="switchForm(3, '📦 PD RETEST')">
-            <span>📦</span> PD RETEST
-        </button>
-        <button class="menu-item" onclick="switchForm(4, '⚠️ PD RE-ADJUSTMENT')">
-            <span>⚠️</span> PD RE-ADJUSTMENT
-        </button>
-        <!-- OPTION 5: Replace YOUR_EXTERNAL_WEBLINK_HERE with your web link (e.g. company dashboard) -->
-        <button class="menu-item" onclick="switchForm(5, '🔗 Product Calculator PD')">
-            <span>🔗</span> Product Calculator PD
-        </button>
-    </nav>
+    <!-- Main Form Display Frame -->
+    <div class="main-content">
+        <!-- Replace URLs below with your public Google Form links (ending in /viewform) -->
+        <iframe id="iframe1" class="active" src="https://forms.gle/eJvuSLmZjqQGBV297">Loading...</iframe>
+        <iframe id="iframe2" src="https://forms.gle/q6mZ6kUc6dp2dYMk6">Loading...</iframe>
+        <iframe id="iframe3" src="https://forms.gle/vrsXpjYCQVZrXJu47">Loading...</iframe>
+        <iframe id="iframe4" src="https://forms.gle/DqdmE8q5oJVgAJ866">Loading...</iframe>
+    </div>
 
-    <!-- Frame Display Content Window -->
-    <main class="main-content">
-        <!-- Form 1 Container -->
-        <div class="iframe-container active" id="container1">
-            <iframe src="https://forms.gle/eJvuSLmZjqQGBV297">Loading...</iframe>
-        </div>
+    <script>
+        function switchForm(index) {
+            // 1. Switch the visibility of the internal frames
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => iframe.classList.remove('active'));
+            document.getElementById('iframe' + index).classList.add('active');
 
-        <!-- Form 2 Container -->
-        <div class="iframe-container" id="container2">
-            <iframe src="https://forms.gle/q6mZ6kUc6dp2dYMk6">Loading...</iframe>
-        </div>
-
-        <!-- Form 3 Container -->
-        <div class="iframe-container" id="container3">
-            <iframe src="https://forms.gle/vrsXpjYCQVZrXJu47">Loading...</iframe>
-        </div>
-
-        <!-- Form 4 Container -->
-        <div class="iframe-container" id="container4">
-            <iframe src="https://forms.gle/DqdmE8q5oJVgAJ866">Loading...</iframe>
-        </div>
-
-        <!-- Option 5 Container (Web Link) -->
-        <div class="iframe-container" id="container5">
-            <!-- Replace "YOUR_EXTERNAL_WEBLINK_HERE" in both href and src below with your actual link -->
-            <div class="fallback-container">
-                <span class="fallback-text">Is this external page blocked?</span>
-                <a href="https://script.google.com/macros/s/AKfycbxIj8ClyJHCT0BTMN-gBVdXuySLHav1_x1cSS8Dy40yaRgpta3McS6Ga-Vewazy157v/exec" target="_blank" class="fallback-btn">Open in New Tab ↗</a>
-            </div>
-            <!-- Padding added to iframe 5 top so the fallback helper doesn't overlap the page content -->
-            <iframe src="https://script.google.com/macros/s/AKfycbxIj8ClyJHCT0BTMN-gBVdXuySLHav1_x1cSS8Dy40yaRgpta3McS6Ga-Vewazy157v/exec" style="padding-top: 52px;">Loading...</iframe>
-        </div>
-    </main>
-
-    <script>
-        const menuBtn = document.getElementById('menuBtn');
-        const rolloutMenu = document.getElementById('rolloutMenu');
-        const menuBackdrop = document.getElementById('menuBackdrop');
-        const headerTitle = document.getElementById('header-active-title');
-
-        // Toggle the rollout menu expansion and close backdrop
-        function toggleMenu() {
-            const isOpen = rolloutMenu.classList.toggle('open');
-            menuBtn.classList.toggle('open', isOpen);
-            menuBackdrop.classList.toggle('open', isOpen);
-        }
-
-        // Switch active views, update top title, and collapse the menu smoothly
-        function switchForm(index, title) {
-            // 1. Hide current view, show target view
-            const containers = document.querySelectorAll('.iframe-container');
-            containers.forEach(container => container.classList.remove('active'));
-            document.getElementById('container' + index).classList.add('active');
-
-            // 2. Set Active Menu Item Style
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach(item => item.classList.remove('active'));
-            menuItems[index - 1].classList.add('active');
-
-            // 3. Update Title Bar Text
-            headerTitle.innerText = title;
-
-            // 4. Close Menu automatically
-            toggleMenu();
-        }
-    </script>
+            // 2. Extract the text of the selected option to update the top status line dynamically
+            const selector = document.getElementById('formSelector');
+            const selectedText = selector.options[selector.selectedIndex].text;
+            
+            // Update the display text line
+            document.getElementById('current-form-title').innerText = selectedText;
+        }
+    </script>
 </body>
 </html>
